@@ -20,7 +20,6 @@ func SetupRoutes() {
 		w.Write([]byte(`{"message":"Hello, world!"}`))
 	})))
 
-
-    fmt.Println("Listening on port 8000")
+	fmt.Println("Listening on port 8000")
 	http.ListenAndServe(":8000", mux)
 }

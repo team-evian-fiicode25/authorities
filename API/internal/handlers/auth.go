@@ -46,7 +46,7 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response.sessionId = login.GetSessionToken().GetToken()
-    response.login.username = login.GetLogin().GetUsername()
+	response.login.username = login.GetLogin().GetUsername()
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(response)

@@ -5,7 +5,7 @@ import { getSession } from "$lib/SessionStore";
 
 
 export const load: LayoutServerLoad = ({cookies}): { session: SessionType } => {
-    var session = getSession(cookies);
+    const session = getSession(cookies);
 
     if (!session) {
         redirect(302, "/auth");

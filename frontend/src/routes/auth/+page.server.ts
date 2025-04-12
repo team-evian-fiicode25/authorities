@@ -1,7 +1,7 @@
 import { fail, redirect } from "@sveltejs/kit";
-import type { Actions } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
 import { isSessionType } from "$lib/types/SessionType";
-import { setSession } from "$lib/SessionStore";
+import { getSession, setSession } from "$lib/SessionStore";
 
 export const actions = {
     default: async ({cookies, request}) => {
@@ -36,3 +36,11 @@ export const actions = {
         redirect(303, "/home");
     }
 } satisfies Actions;
+
+export const load: PageServerLoad = ({ cookies }) => {
+    const session = getSession(cookies);
+
+    if (session) {
+        redirect(302, "/home");
+    }
+}

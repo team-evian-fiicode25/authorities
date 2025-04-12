@@ -23,8 +23,8 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	var request struct {
-		username string
-		password string
+		Username string `json:"username"`
+		Password string `json:"password"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
@@ -32,21 +32,21 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	login, err := h.authService.LogInWithPassword(context.Background(), request.username, request.password)
+	login, err := h.authService.LogInWithPassword(context.Background(), request.Username, request.Password)
 	if err != nil {
 		writeError(w, err)
 		return
 	}
 
 	var response struct {
-		sessionId string
-		login     struct {
-			username string
-		}
+		SessionId string `json:"sessionId"`
+		Login     struct {
+			Username string `json:"username"`
+		} `json:"login"`
 	}
 
-	response.sessionId = login.GetSessionToken().GetToken()
-	response.login.username = login.GetLogin().GetUsername()
+	response.SessionId = login.GetSessionToken().GetToken()
+	response.Login.Username = login.GetLogin().GetUsername()
 
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(response)
@@ -68,10 +68,10 @@ func (h *AuthHandler) AuthMiddleware(next http.Handler) http.Handler {
 
 func writeError(w http.ResponseWriter, err error) {
 	var response struct {
-		error string
+		Error string `json:"error"`
 	}
 
-	response.error = err.Error()
+	response.Error = err.Error()
 
 	w.WriteHeader(http.StatusUnauthorized)
 	json.NewEncoder(w).Encode(response)

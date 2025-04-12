@@ -1,16 +1,25 @@
 services:
+  webserver:
+    build: ./frontend
+    ports:
+      - '8000:3000'
+    environment:
+      ORIGIN: http://localhost:8000
+      BACKEND_URL: http://api:8000
+    restart: on-failure
+
   api:
-    build: .
+    build: ./API
     environment:
       AUTH_URL: "http://auth-service:8080/graphql"
     restart: on-failure
-    ports:
-      - '8000:8000'
     depends_on:
       - auth-service
 
   auth-service:
     image: ghcr.io/team-evian-fiicode25/authentication:v0.7.1
+    ports:
+      - '8001:8080'
     environment:
       MANDATORYFIELDS__USERNAME: true
       MANDATORYFIELDS__PHONENUMBER: false

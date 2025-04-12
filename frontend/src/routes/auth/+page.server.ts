@@ -2,6 +2,7 @@ import { fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { isSessionType } from "$lib/types/SessionType";
 import { getSession, setSession } from "$lib/SessionStore";
+import { env } from "$env/dynamic/private";
 
 export const actions = {
     default: async ({cookies, request}) => {
@@ -10,7 +11,7 @@ export const actions = {
         const username = data.get("username");
         const password = data.get("password");
 
-        const res = await fetch("http://localhost:8000/auth/login", {
+        const res = await fetch(`${env.BACKEND_URL}/auth/login`, {
             method: "POST",
             body: JSON.stringify({
                 username: username,

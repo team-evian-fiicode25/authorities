@@ -4,8 +4,9 @@ export interface SessionType {
 }
 
 export function isSessionType(o: any): o is SessionType {
-    return "sessionId" in o && typeof(o.sessionId) == "string" &&
-        "login" in o && isLoginType(o.login);
+    return (
+        "sessionId" in o && typeof o.sessionId == "string" && "login" in o && isLoginType(o.login)
+    )
 }
 
 export interface LoginType {
@@ -13,5 +14,5 @@ export interface LoginType {
 }
 
 function isLoginType(o: any): o is LoginType {
-    return 'username' in o && typeof(o.username) == "string";
+    return "username" in o && typeof o.username == "string"
 }

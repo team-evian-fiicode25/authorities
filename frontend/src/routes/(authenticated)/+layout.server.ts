@@ -1,15 +1,14 @@
 import { redirect } from "@sveltejs/kit"
 import type { LayoutServerLoad } from "./$types"
-import { type SessionType } from "$lib/types/SessionType";
-import { getSession } from "$lib/SessionStore";
+import { type SessionType } from "$lib/types/SessionType"
+import { getSession } from "$lib/SessionStore"
 
-
-export const load: LayoutServerLoad = ({cookies}): { session: SessionType } => {
-    const session = getSession(cookies);
+export const load: LayoutServerLoad = ({ cookies }): { session: SessionType } => {
+    const session = getSession(cookies)
 
     if (!session) {
-        redirect(302, "/auth");
+        redirect(302, "/auth")
     }
 
-    return { session };
+    return { session }
 }

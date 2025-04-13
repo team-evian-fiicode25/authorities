@@ -1,0 +1,16 @@
+mutation LogInWithUsername($username: String!, $password: String!) {
+  loginSession: logInWithPassword(username: $username, password: $password) {
+    login {
+      username
+    }
+    sessionToken {
+      token
+    }
+  }
+}
+
+query VerifyToken($sessionToken: String!) {
+  login(sessionToken: $sessionToken) {
+    id
+  }
+}

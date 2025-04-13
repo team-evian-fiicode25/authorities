@@ -1,5 +1,5 @@
 <script>
-    const { data } = $props()
+    const { data } = $props();
 </script>
 
 <h1 class="text-lg">Welcome to RideMe</h1>
